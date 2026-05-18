@@ -1,11 +1,23 @@
-
-using MyGym.Presentation.DbContexts;
+using Microsoft.EntityFrameworkCore;
+using MyGym.DataAccess.DbContexts;
+using MyGym.DataAccess.Repositories.Plans;
+using MyGym.DataAccess.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<GYMDbcontext>();
+var connectionString =
+    builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<GYMDbcontext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
+builder.Services.AddScoped<IPlanRepository, PlanRepository>();
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,5 +40,11 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider
+        .GetRequiredService<GYMDbcontext>();
+        await DatabaseSeeder.SeedallAsync(context);
+   
+}
 app.Run();

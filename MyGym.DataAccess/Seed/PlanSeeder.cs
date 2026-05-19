@@ -18,9 +18,23 @@ namespace MyGym.DataAccess.Seed
                     Name = "Basic Plan",
 
                     Description =
-                    "Access to gym equipment only",
+                    "Access to gym equipment during staffed hours",
 
                     DurationInDays = 30,
+
+                    Price = 300,
+
+                    IsActive = true
+                },
+
+                new Plan
+                {
+                    Name = "Standard Plan",
+
+                    Description =
+                    "Includes gym equipment and 2 group classes per week",
+
+                    DurationInDays = 60,
 
                     Price = 500,
 
@@ -32,30 +46,30 @@ namespace MyGym.DataAccess.Seed
                     Name = "Premium Plan",
 
                     Description =
-                    "Access to gym equipment and group classes",
+                    "Unlimited access to equipment, classes, and sauna",
 
                     DurationInDays = 90,
 
-                    Price = 1500,
+                    Price = 900,
 
-                    IsActive = true
+                    IsActive = false
                 },
 
                 new Plan
                 {
-                    Name = "VIP Plan",
+                    Name = "Annual Plan",
 
                     Description =
-                    "Full access with personal training sessions",
+                    "Full year access with personal trainer sessions",
 
-                    DurationInDays = 180,
+                    DurationInDays = 365,
 
                     Price = 3000,
 
-                    IsActive = true
+                    IsActive = false
                 }
             };
-
+                
             await context.Plans.AddRangeAsync(plans);
 
             await context.SaveChangesAsync();

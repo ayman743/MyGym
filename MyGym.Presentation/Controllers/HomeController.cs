@@ -1,22 +1,28 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using MyGym.Presentation.Models;
+using MyGym.DataAccess.DbContexts;
+using MyGym.DataAccess.Models;
+using System.Diagnostics;
+
 
 namespace MyGym.Presentation.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly GYMDbcontext _dbcontext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, GYMDbcontext dbcontext)
         {
             _logger = logger;
+            _dbcontext = dbcontext;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var result = _dbcontext.Plans.ToList();
+            return View(result);
         }
+      
 
         public IActionResult Privacy()
         {

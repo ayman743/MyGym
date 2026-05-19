@@ -1,32 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MyGym.Presentation.DbContexts;
+using MyGym.DataAccess.Repositories.Plans;
 
-namespace MyGym.Presentation.Controllers
+namespace MyGym.Presentation.Controllers 
 {
-    public class PlanController(GYMDbcontext dbcontext) : Controller
+    public class PlanController(IPlanRepository PlanRepo) : Controller
     {
-
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var Plans = await dbcontext.Plans
-                
-                .ToListAsync();
-         
+            var Plans = await PlanRepo.GetPlansAsync();
             return View(Plans);
         }
 
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var Plan = await dbcontext.Plans
-                .FirstOrDefaultAsync(p => p.Id == id);
-            if(Plan == null)
+            var Plan = await PlanRepo.GetByIdAsync(id);
+
+            if (Plan == null)
             {
                 return NotFound();
             }
-               
+
             return View(Plan);
         }
     }

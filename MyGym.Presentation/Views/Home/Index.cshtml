@@ -1,5 +1,5 @@
-﻿
-
+﻿@using MyGym.DataAccess.Models
+@model IEnumerable<Plan>
 
 <div class="container">
     <main role="main" class="pb-3">
@@ -26,13 +26,13 @@
                         <div class="row g-0">
                             <div class="col-4">
                                 <div class="stat">
-                                    <span class="fw-bolder fs-5 d-block mb-1">100</span>
-                                    <h3 class="fs-5 fw-normal">Total Members</h3>
+                                    <span class="fw-bolder fs-5 d-block mb-1">@Model.Count()</span>
+                                    <h3 class="fs-5 fw-normal">Total Members </h3>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="stat">
-                                    <span class="fw-bolder fs-5 d-block mb-1">85</span>
+                                    <span class="fw-bolder fs-5 d-block mb-1">@Model.Count(p => p.IsActive)</span>
                                     <h3 class="fs-5 fw-normal">Active Members</h3>
                                 </div>
                             </div>

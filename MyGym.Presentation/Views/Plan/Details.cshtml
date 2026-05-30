@@ -2,7 +2,7 @@
 
 @model Plan
 
-<div class="container">
+<div class="container page">
     <main role="main" class="pb-3">
 
         <div class="container mt-5">
@@ -11,7 +11,7 @@
                     <div class="card shadow-lg border-0">
                         @* If Plan is Active put class bg-primary-color if not bg-secondary *@
 
-                        <div class="card-header text-white text-center py-5  @(Model.IsActive ? "bg-primary-color" : "not bg-secondary")">
+                        <div class="card-header text-white text-center py-5  @(Model.IsActive ? "bg-primary-color" : "bg-secondary")">
                             <i class="bi bi-award display-4 mb-3"></i>
                             <h2 class="mb-0">@Model.Name</h2>
                         </div>

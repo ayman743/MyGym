@@ -2,9 +2,9 @@
 
 namespace MyGym.DataAccess.Models
 {
-    public class HealthRecord
+    public class HealthRecord:BaseEntity
     {
-        public int Id { get; set; }
+       
 
         public decimal Height { get; set; }
         public decimal Weight { get; set; }
@@ -15,8 +15,6 @@ namespace MyGym.DataAccess.Models
 
         public string? Note { get; set; }
 
-
-        public DateTime LastUpdate { get; set; }
 
         public int MemberId { get; set; }
         public Member Member { get; set; } = null!;

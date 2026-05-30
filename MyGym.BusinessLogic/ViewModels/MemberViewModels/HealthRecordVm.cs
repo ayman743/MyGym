@@ -1,0 +1,18 @@
+﻿using MyGym.DataAccess.Enums;
+using System.ComponentModel.DataAnnotations;
+
+namespace MyGym.BusinessLogic.ViewModels.MemberViewModels
+{
+    public class HealthRecordVm
+    {
+        [Range(0.1, 300, ErrorMessage = "Height must be greater than 0")]
+        public decimal Height { get; set; }
+
+        [Range(0.1, 500, ErrorMessage = "Weight must be greater than 0")]
+        public decimal Weight { get; set; }
+
+        [Required(ErrorMessage = "Blood Type Is Required")]
+        public BloodType BloodType { get; set; } = default!;
+        public string? Note { get; set; } = default!;
+    }
+}

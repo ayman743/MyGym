@@ -8,20 +8,27 @@ namespace MyGym.DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<Membership> builder)
         {
-            
+            builder.Property(x => x.CreatedAt)
+                  .HasDefaultValueSql("GETDATE()");
+
             builder.Property(x => x.StartDate)
-                   .HasDefaultValueSql("GETDATE()");
+                     .HasConversion(
+                          v => v.ToDateTime(TimeOnly.MinValue),
+                          v => DateOnly.FromDateTime(v)
+        )
+                     .HasColumnType("date")
+                     .HasDefaultValueSql("CAST(GETDATE() AS DATE)");
 
             builder.HasOne(ms => ms.Plan)
                    .WithMany(m => m.MemberShips)
                    .HasForeignKey(x => x.PlanId)
-                   .OnDelete(DeleteBehavior.NoAction);
+                   .OnDelete(DeleteBehavior.Restrict);
 
 
             builder.HasOne(ms => ms.Member)
                     .WithMany(m => m.Memberships)
                     .HasForeignKey(x => x.MemberId)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.ToTable(ms =>
             {
@@ -31,11 +38,7 @@ namespace MyGym.DataAccess.Configurations
                     );
             });
 
-          
-
-            
-
-
+           
 
         }
     }

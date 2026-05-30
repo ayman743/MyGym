@@ -11,65 +11,31 @@ namespace MyGym.DataAccess.Seed
             if (await context.Sessions.AnyAsync())
                 return;
 
-            var trainerIds = await context.Trainers
-                .Select(t => t.Id)
-                .ToListAsync();
-
-            var categoryIds = await context.Categories
-                .Select(c => c.Id)
-                .ToListAsync();
-
-            if (trainerIds.Count == 0 || categoryIds.Count < 3)
-                return;
-
-            var start1 = DateTime.UtcNow.AddDays(1);
-            var start2 = DateTime.UtcNow.AddDays(2);
-            var start3 = DateTime.UtcNow.AddDays(3);
+            var category = await context.Categories.FirstAsync();
+            var trainer = await context.Trainers.FirstAsync();
 
             var sessions = new List<Session>
             {
-                new Session
-                {
-                    Capacity = 15,
-
-                    StartDate = start1,
-
-                    EndDate = start1.AddHours(1),
-
-                    TrainerId = trainerIds[0],
-
-                    CategoryId = categoryIds[0]
-                },
-
-                new Session
+                new()
                 {
                     Capacity = 20,
-
-                    StartDate = start2,
-
-                    EndDate = start2.AddHours(2),
-
-                    TrainerId = trainerIds[0],
-
-                    CategoryId = categoryIds[1]
+                    StartDate = DateTime.Now.AddDays(1),
+                    EndDate = DateTime.Now.AddDays(1).AddHours(2),
+                    CategoryId = category.Id,
+                    TrainerId = trainer.Id
                 },
 
-                new Session
+                new()
                 {
-                    Capacity = 10,
-
-                    StartDate = start3,
-
-                    EndDate = start3.AddHours(1),
-
-                    TrainerId = trainerIds[0],
-
-                    CategoryId = categoryIds[2]
+                    Capacity = 15,
+                    StartDate = DateTime.Now.AddDays(2),
+                    EndDate = DateTime.Now.AddDays(2).AddHours(1),
+                    CategoryId = category.Id,
+                    TrainerId = trainer.Id
                 }
             };
 
             await context.Sessions.AddRangeAsync(sessions);
-
             await context.SaveChangesAsync();
         }
     }

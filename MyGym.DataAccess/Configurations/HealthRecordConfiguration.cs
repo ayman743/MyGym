@@ -8,9 +8,9 @@ namespace MyGym.DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<HealthRecord> builder)
         {
-          
 
-
+            builder.Property(x => x.CreatedAt)
+                  .HasDefaultValueSql("GETDATE()");
             builder.Property(b=>b.BloodType)
                 .IsRequired()
                 .HasConversion<string>()
@@ -25,10 +25,13 @@ namespace MyGym.DataAccess.Configurations
             builder.Property(b => b.Note)
                 .HasMaxLength(500);
 
-            builder.HasOne(b=>b.Member)
-                   .WithOne(m=>m.HealthRecord)
-                   .HasForeignKey<HealthRecord>(h => h.MemberId)
-                   .OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(b => b.Member)
+                   .WithOne(m => m.HealthRecord)
+                   .HasForeignKey<HealthRecord>(h => h.MemberId);
+
+            
+
+          
         }
     }
 }

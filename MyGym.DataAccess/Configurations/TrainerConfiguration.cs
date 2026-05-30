@@ -6,17 +6,26 @@ namespace MyGym.DataAccess.Configurations
 {
     public class TrainerConfiguration : UserConfiguration<Trainer>
     {
-            public override void Configure(EntityTypeBuilder<Trainer> builder)
-            {
-                base.Configure(builder);
+        public override void Configure(EntityTypeBuilder<Trainer> builder)
+        {
+            base.Configure(builder);
 
-                builder.Property(t => t.HireDate)
-                        .HasDefaultValueSql("GETDATE()");
+            builder.Property(t => t.HireDate)
+                    .HasConversion(
+                    v => v.ToDateTime(TimeOnly.MinValue),
+                    v => DateOnly.FromDateTime(v)
+       )
+                     .HasColumnType("date")
+                     .HasDefaultValueSql("CAST(GETDATE() AS DATE)");
 
-                builder.Property(t => t.Specialty)
-                .HasConversion<string>();
+            builder.Property(x => x.CreatedAt)
+                .HasDefaultValueSql("GETDATE()");
 
-            }
+
+            builder.Property(t => t.Specialty)
+            .HasConversion<string>();
+
+        }
 
 
     }

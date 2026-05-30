@@ -32,9 +32,10 @@ namespace MyGym.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("Date")
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("date")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("BookingDate")
                         .HasDefaultValueSql("GETDATE()");
 
                     b.Property<bool>("IsAttended")
@@ -47,6 +48,9 @@ namespace MyGym.DataAccess.Migrations
 
                     b.Property<int>("SessionId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -67,13 +71,9 @@ namespace MyGym.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -101,12 +101,14 @@ namespace MyGym.DataAccess.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
                     b.Property<decimal>("Height")
                         .HasPrecision(5, 2)
                         .HasColumnType("decimal(5,2)");
-
-                    b.Property<DateTime>("LastUpdate")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
@@ -114,6 +116,9 @@ namespace MyGym.DataAccess.Migrations
                     b.Property<string>("Note")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("Weight")
                         .HasPrecision(5, 2)
@@ -135,6 +140,11 @@ namespace MyGym.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
                     b.Property<DateOnly>("EndDate")
                         .HasColumnType("date");
 
@@ -144,10 +154,13 @@ namespace MyGym.DataAccess.Migrations
                     b.Property<int>("PlanId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("StartDate")
+                    b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("date")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasDefaultValueSql("CAST(GETDATE() AS DATE)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -155,7 +168,7 @@ namespace MyGym.DataAccess.Migrations
 
                     b.HasIndex("PlanId");
 
-                    b.ToTable("MemberShips", t =>
+                    b.ToTable("Memberships", t =>
                         {
                             t.HasCheckConstraint("CK_Membership_DateRange", "[StartDate] < [EndDate]");
                         });
@@ -174,9 +187,6 @@ namespace MyGym.DataAccess.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("varchar(200)");
@@ -185,9 +195,6 @@ namespace MyGym.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -224,16 +231,12 @@ namespace MyGym.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -268,13 +271,13 @@ namespace MyGym.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseSequence(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("JoinDate")
+                        .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<DateOnly?>("DateOfBirth")
+                    b.Property<DateOnly>("DateOfBirth")
                         .HasColumnType("date");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -283,11 +286,6 @@ namespace MyGym.DataAccess.Migrations
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -311,11 +309,6 @@ namespace MyGym.DataAccess.Migrations
                 {
                     b.HasBaseType("MyGym.DataAccess.Models.User");
 
-                    b.Property<DateOnly>("JoinDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("date")
-                        .HasDefaultValueSql("GETDATE()");
-
                     b.Property<string>("Photo")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -336,10 +329,10 @@ namespace MyGym.DataAccess.Migrations
                 {
                     b.HasBaseType("MyGym.DataAccess.Models.User");
 
-                    b.Property<DateOnly>("HireDate")
+                    b.Property<DateTime>("HireDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("date")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasDefaultValueSql("CAST(GETDATE() AS DATE)");
 
                     b.Property<string>("Specialty")
                         .IsRequired()
@@ -363,13 +356,13 @@ namespace MyGym.DataAccess.Migrations
                     b.HasOne("MyGym.DataAccess.Models.Member", "Member")
                         .WithMany("Bookings")
                         .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MyGym.DataAccess.Models.Session", "Session")
                         .WithMany("Bookings")
                         .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Member");
@@ -382,7 +375,7 @@ namespace MyGym.DataAccess.Migrations
                     b.HasOne("MyGym.DataAccess.Models.Member", "Member")
                         .WithOne("HealthRecord")
                         .HasForeignKey("MyGym.DataAccess.Models.HealthRecord", "MemberId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Member");
@@ -393,13 +386,13 @@ namespace MyGym.DataAccess.Migrations
                     b.HasOne("MyGym.DataAccess.Models.Member", "Member")
                         .WithMany("Memberships")
                         .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MyGym.DataAccess.Models.Plan", "Plan")
                         .WithMany("MemberShips")
                         .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Member");
@@ -433,7 +426,7 @@ namespace MyGym.DataAccess.Migrations
                             b1.Property<int>("MemberId")
                                 .HasColumnType("int");
 
-                            b1.Property<int>("BuldingNumber")
+                            b1.Property<int>("BuildingNumber")
                                 .HasColumnType("int");
 
                             b1.Property<string>("City")
@@ -463,7 +456,7 @@ namespace MyGym.DataAccess.Migrations
                             b1.Property<int>("TrainerId")
                                 .HasColumnType("int");
 
-                            b1.Property<int>("BuldingNumber")
+                            b1.Property<int>("BuildingNumber")
                                 .HasColumnType("int");
 
                             b1.Property<string>("City")

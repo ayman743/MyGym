@@ -1,14 +1,31 @@
-﻿namespace MyGym.DataAccess.Enums
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MyGym.DataAccess.Enums
 {
     public enum BloodType
     {
+        [Display(Name = "A+")]
         APositive,
+
+        [Display(Name = "A-")]
         ANegative,
+
+        [Display(Name = "B+")]
         BPositive,
+
+        [Display(Name = "B-")]
         BNegative,
-        ABPositive,
-        ABNegative,
+
+        [Display(Name = "O+")]
         OPositive,
-        ONegative
+
+        [Display(Name = "O-")]
+        ONegative,
+
+        [Display(Name = "AB+")]
+        ABPositive,
+
+        [Display(Name = "AB-")]
+        ABNegative
     }
 }

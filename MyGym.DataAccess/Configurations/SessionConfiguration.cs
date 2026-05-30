@@ -8,6 +8,8 @@ namespace MyGym.DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<Session> builder)
         {
+         
+
 
             builder.HasOne(s => s.Category)
                 .WithMany(c => c.Sessions)
@@ -27,8 +29,9 @@ namespace MyGym.DataAccess.Configurations
                 s.HasCheckConstraint(
                     "CK_Session_Date", "[StartDate] < [EndDate]");
             });
+            builder.Property(x => x.CreatedAt)
+                  .HasDefaultValueSql("GETDATE()");
 
-            builder.HasQueryFilter(s => !s.IsDeleted);
         }
     }
 }

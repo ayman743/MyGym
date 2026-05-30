@@ -1,6 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using MyGym.BusinessLogic.Services.Members;
+using MyGym.BusinessLogic.Services.Plans;
+using MyGym.BusinessLogic.Services.Trainers;
 using MyGym.DataAccess.DbContexts;
-using MyGym.DataAccess.Repositories.Plans;
+using MyGym.DataAccess.Repositories.Generic;
+using MyGym.DataAccess.Repositories.Members;
 using MyGym.DataAccess.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,9 +18,12 @@ builder.Services.AddDbContext<GYMDbcontext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
-builder.Services.AddScoped<IPlanRepository, PlanRepository>();
 
-
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+builder.Services.AddScoped<IMemberService, MemberService>();
+builder.Services.AddScoped<ITrainerService, TrainerService>();
+builder.Services.AddScoped<IPlanServiece, PlanServiece>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 var app = builder.Build();
 
@@ -29,11 +36,12 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+
 app.UseRouting();
 
 app.UseAuthorization();
-
-app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
@@ -44,7 +52,7 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider
         .GetRequiredService<GYMDbcontext>();
-        await DatabaseSeeder.SeedallAsync(context);
-   
+    await DatabaseSeeder.SeedallAsync(context);
+
 }
 app.Run();

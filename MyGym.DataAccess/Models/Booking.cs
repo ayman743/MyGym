@@ -1,9 +1,9 @@
 ﻿namespace MyGym.DataAccess.Models
 {
-    public class Booking
+    public class Booking:BaseEntity
     {
-        public int Id { get; set; }
-        public DateOnly Date {  get; set; }= DateOnly.FromDateTime(DateTime.Now);
+       
+       
         public bool IsAttended { get; set; }=false;
 
         public int SessionId {  get; set; }

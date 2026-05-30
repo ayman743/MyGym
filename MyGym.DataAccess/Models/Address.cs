@@ -8,7 +8,7 @@ namespace MyGym.DataAccess.Models
 
         public string Street { get; set; } = null!;
 
-        public int BuldingNumber {  get; set; }
+        public int BuildingNumber {  get; set; }
 
     }
 }

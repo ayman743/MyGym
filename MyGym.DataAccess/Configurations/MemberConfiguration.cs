@@ -8,14 +8,18 @@ namespace MyGym.DataAccess.Configurations
     {
         public override void Configure(EntityTypeBuilder<Member> builder)
         {
-            base.Configure(builder);
-        
+            builder.Property(x => x.CreatedAt)
+             .HasColumnName("JoinDate")
+                 .HasDefaultValueSql("GETDATE()");
 
+   
+
+            base.Configure(builder);
+
+               
             builder.Property(m => m.Photo)
                    .HasMaxLength(500);
 
-            builder.Property(x => x.JoinDate)
-                   .HasDefaultValueSql("GETDATE()");
 
            
 

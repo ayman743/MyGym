@@ -19,6 +19,7 @@ namespace MyGym.Presentation.Controllers
 
         public IActionResult Index()
         {
+          
             var result = _dbcontext.Plans.ToList();
             return View(result);
         }
@@ -34,5 +35,7 @@ namespace MyGym.Presentation.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+      
     }
 }

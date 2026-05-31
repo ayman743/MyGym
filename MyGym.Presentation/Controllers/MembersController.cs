@@ -152,8 +152,8 @@ namespace MyGym.Presentation.Controllers
 
 
         [HttpPost]
-        [ActionName("EditMember")]
-        public async Task<IActionResult> SubmitEditMember(int id,EditMemberVm editMemberVm)
+       
+        public async Task<IActionResult> EditMember(int id,EditMemberVm editMemberVm)
         {
             if (!ModelState.IsValid)
             {

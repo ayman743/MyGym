@@ -7,12 +7,14 @@ namespace MyGym.DataAccess.Configurations
     public class UserConfiguration<T> : IEntityTypeConfiguration<T>
        where T : User
     {
+
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
 
-            builder.Property(x => x.IsDeleted)
-                    .HasDefaultValue(false);
 
+
+            builder.Property(x => x.CreatedAt)
+                  .HasDefaultValueSql("GETDATE()");
 
             builder.Property(u => u.Name)
                 .IsRequired()

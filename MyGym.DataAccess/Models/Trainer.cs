@@ -4,7 +4,7 @@ namespace MyGym.DataAccess.Models
 {
     public class Trainer : User
     {
-        public Specialty Specialty { get; set; }   
+        public Specialties Specialty { get; set; }   
         public DateOnly HireDate { get; set; }= DateOnly.FromDateTime(DateTime.Now);
 
         public ICollection<Session> Sessions { get; set; } = [];

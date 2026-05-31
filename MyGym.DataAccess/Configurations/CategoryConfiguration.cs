@@ -4,12 +4,12 @@ using MyGym.DataAccess.Models;
 
 namespace MyGym.DataAccess.Configurations
 {
-    internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
+    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-           
-
+            builder.Property(x => x.CreatedAt)
+                     .HasDefaultValueSql("GETDATE()");
             builder.HasKey(p=>p.Id);
 
             builder.Property(p => p.Name)
@@ -17,7 +17,7 @@ namespace MyGym.DataAccess.Configurations
                 .HasMaxLength(20);
 
 
-            builder.HasQueryFilter(x => !x.IsDeleted);
+           
         }
     }
 }

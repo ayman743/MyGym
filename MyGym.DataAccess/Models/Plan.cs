@@ -12,6 +12,6 @@
 
         public bool IsActive { get; set; }= true;
 
-        public ICollection<Membership> MemberShips { get; set; } = null!;
+        public ICollection<Membership> MemberShips { get; set; } = [];
     }
 }

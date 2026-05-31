@@ -1,7 +1,7 @@
 ﻿@using MyGym.DataAccess.Models
 @model IEnumerable<Plan>
 
-<div class="container">
+<div class="container page">
     <main role="main" class="pb-3">
 
         <div class="container">
@@ -26,7 +26,7 @@
                     {
                         <div class="col-12 col-md-6 col-lg-4">
 
-                            <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden plan-card">
+                            <div class="card h-100 shadow-sm border-0 overflow-hidden plan-card">
 
                                 <div class="card-header text-white text-center py-4 @(plan.IsActive ? "bg-primary-color" : "bg-secondary")">
 
@@ -83,7 +83,7 @@
                                             <a asp-controller="Plan"
                                                asp-action="Details"
                                                asp-route-id="@plan.Id"
-                                               class="btn btn-outline-primary btn-sm rounded-3">
+                                               class="btn btn-outline btn-sm">
 
                                                 <i class="bi bi-eye me-1"></i>
 
@@ -95,7 +95,7 @@
                                                 <a asp-controller="Plan"
                                                    asp-action="Edit"
                                                    asp-route-id="@plan.Id"
-                                                   class="btn btn-outline-dark btn-sm flex-fill rounded-3">
+                                                   class="btn btn-outline btn-sm flex-fill">
 
                                                     <i class="bi bi-pencil me-1"></i>
 
@@ -109,7 +109,7 @@
                                                       class="flex-fill">
 
                                                     <button type="submit"
-                                                            class="btn btn-sm w-100 rounded-3 @(plan.IsActive ? "btn-outline-danger" : "btn-outline-success")">
+                                                            class="btn btn-sm w-100 @(plan.IsActive ? "btn-outline-danger" : "btn-outline-success")">
 
                                                         @if (plan.IsActive)
                                                         {

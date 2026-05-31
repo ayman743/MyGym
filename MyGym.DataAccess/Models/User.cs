@@ -14,7 +14,7 @@ namespace MyGym.DataAccess.Models
         public string Phone { get; set; } = null!;
 
 
-        public DateOnly? DateOfBirth { get; set; }
+        public DateOnly DateOfBirth { get; set; }
 
        
 

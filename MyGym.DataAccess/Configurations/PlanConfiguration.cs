@@ -9,7 +9,7 @@ namespace MyGym.DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<Plan> builder)
         {
-           
+
 
 
             builder.Property(p => p.Name)
@@ -32,7 +32,7 @@ namespace MyGym.DataAccess.Configurations
                 tp.HasCheckConstraint("CK_Plan_Duration", "DurationInDays between 1 and 365 ");
             });
 
-            builder.HasQueryFilter(x => !x.IsDeleted);
+            
 
 
         }

@@ -12,30 +12,14 @@ namespace MyGym.DataAccess.Seed
                 return;
 
             var categories = new List<Category>
-        {
-            new Category
             {
-                Name = "Yoga"
-            },
-
-            new Category
-            {
-                Name = "Boxing"
-            },
-
-            new Category
-            {
-                Name = "CrossFit"
-            },
-
-            new Category
-            {
-                Name = "General Fitness"
-            }
-        };
+                new() { Name = "Yoga" },
+                new() { Name = "Boxing" },
+                new() { Name = "CrossFit" },
+                new() { Name = "Fitness" }
+            };
 
             await context.Categories.AddRangeAsync(categories);
-
             await context.SaveChangesAsync();
         }
     }

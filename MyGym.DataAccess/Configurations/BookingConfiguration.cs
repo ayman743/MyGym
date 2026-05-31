@@ -8,20 +8,23 @@ namespace MyGym.DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<Booking> builder)
         {
-            
+            builder.Property(x => x.CreatedAt)
+                .HasColumnName("BookingDate")
+                    .HasDefaultValueSql("GETDATE()");
 
-            builder.Property(b => b.Date)
-                .HasDefaultValueSql("GETDATE()");
+
 
             builder.HasOne(b => b.Member)
                 .WithMany(m => m.Bookings)
-                .HasForeignKey(b => b.MemberId)
-                .OnDelete(DeleteBehavior.NoAction); 
+                .HasForeignKey(b => b.MemberId).
+                OnDelete(DeleteBehavior.Cascade);
+
 
             builder.HasOne(b => b.Session)
                 .WithMany(m => m.Bookings)
-                .HasForeignKey(b=>b.SessionId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasForeignKey(b => b.SessionId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             builder.HasIndex(b => new { b.MemberId, b.SessionId })
                 .IsUnique();

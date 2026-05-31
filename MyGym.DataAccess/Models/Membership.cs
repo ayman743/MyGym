@@ -1,8 +1,7 @@
 ﻿namespace MyGym.DataAccess.Models
 {
-    public class Membership
+    public class Membership:BaseEntity
     {
-        public int Id { get; set; }
 
         public DateOnly StartDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
